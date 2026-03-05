@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pollocks Scrapbook: Final Premium Edition</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;family=Gochi+Hand&amp;family=Architects+Daughter&amp;family=Patrick+Hand&amp;family=Caveat:wght@400..700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0ea5e9",
+                        "primary-dark": "#0369a1",
+                        "accent-sky": "#38bdf8",
+                        "wax-blue": "#0284c7",
+                        "crayon-red": "#ef4444",
+                        "crayon-blue": "#3b82f6",
+                        "crayon-yellow": "#f59e0b",
+                        "paper-white": "#fafaf9",
+                        "sky-premium": "#0ea5e9",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "hand": ["Gochi Hand", "cursive"],
+                        "handwritten": ["Gochi Hand", "cursive"],
+                        "note": ["Caveat", "cursive"],
+                        "accent": ["Architects Daughter", "cursive"],
+                        "body": ["Patrick Hand", "cursive"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .polaroid {
+                @apply bg-white p-4 pb-12 shadow-xl border border-slate-200 rotate-1 hover:rotate-0 transition-transform duration-300;
+                box-shadow: 5px 5px 15px rgba(0,0,0,0.1), -2px -2px 10px rgba(255,255,255,0.8);
+            }
+            .polaroid-inner {
+                @apply w-full h-full object-cover border border-slate-100;
+            }
+            .crayon-tab-blue {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                box-shadow: inset -2px -4px 6px rgba(0,0,0,0.2), inset 2px 4px 6px rgba(255,255,255,0.3);
+            }
+            .crayon-tab-yellow {
+                background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+                box-shadow: inset -2px -4px 6px rgba(0,0,0,0.2), inset 2px 4px 6px rgba(255,255,255,0.3);
+            }
+            .scrapbook-bg {
+                background-color: #f1f5f9;
+                background-image: 
+                    radial-gradient(#cbd5e1 0.5px, transparent 0.5px),
+                    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+                background-size: 20px 20px, 100% 40px;
+            }
+            .tape-effect {
+                @apply absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-white/40 backdrop-blur-sm -rotate-2;
+                box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+            }
+            .glassmorphic-nav {
+                @apply backdrop-blur-xl bg-white/70 border-b border-sky-100;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            }
+            @keyframes marquee {
+                0% { transform: translateY(100%); opacity: 0; }
+                10% { transform: translateY(0); opacity: 1; }
+                40% { transform: translateY(0); opacity: 1; }
+                50% { transform: translateY(-100%); opacity: 0; }
+                100% { transform: translateY(-100%); opacity: 0; }
+            }
+            .animate-update-1 {
+                animation: marquee 8s infinite;
+            }
+            .animate-update-2 {
+                animation: marquee 8s infinite 4s;
+                opacity: 0;
+            }
+            .glass-nav-container {
+                @apply bg-white/80 backdrop-blur-2xl border-b border-sky-100/30 relative overflow-hidden;
+            }
+            .nav-inner-floating {
+                @apply mx-auto max-w-[1400px];
+            }
+            .sketch-border {
+                border: 2px solid #0ea5e9;
+                border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            }
+            .sketch-border-subtle {
+                border: 1.5px solid rgba(14, 165, 233, 0.4);
+                border-radius: 20px 5px 25px 5px/5px 25px 5px 20px;
+            }
+            .crayon-button {
+                @apply relative overflow-hidden transition-all duration-300;
+                box-shadow: 3px 3px 0px rgba(14, 165, 233, 0.3);
+                border-radius: 8px 3px 10px 3px/3px 10px 3px 8px;
+            }
+            .crayon-button:hover {
+                transform: translate(-1px, -1px);
+                box-shadow: 5px 5px 0px rgba(14, 165, 233, 0.5);
+            }
+            .wax-stroke {
+                filter: drop-shadow(1px 1px 0px rgba(2, 132, 199, 0.4));
+            }
+            .alert-sub-bar {
+                @apply bg-white/60 backdrop-blur-xl border-b border-sky-200/20 py-3 md:py-1.5 px-6 flex items-center justify-center gap-4 md:gap-12 flex-col md:flex-row overflow-hidden relative shadow-sm;
+            }
+            .notification-pill {
+                @apply hidden md:flex items-center gap-2 bg-white/90 px-2.5 py-0.5 sketch-border-subtle text-[10px] font-black uppercase tracking-widest text-primary shadow-sm;
+            }
+        }
+    </style>
+</head>
+
+<body class="scrapbook-bg text-slate-800 min-h-screen font-display">
+    <header class="fixed top-0 z-50 w-full transition-all duration-500 shadow-2xl shadow-sky-900/5">
+        <div class="glass-nav-container">
+            <nav class="nav-inner-floating flex items-center justify-between px-4 md:px-8 lg:px-16 py-4">
+                <div class="flex items-center gap-12">
+                    <a class="flex items-center gap-3 group" href="Dashboard.html">
+                        <img src="Logo.jpeg" alt="Pollocks School Logo"
+                            class="h-16 w-auto object-contain transform group-hover:scale-105 transition-transform drop-shadow-sm" />
+                    </a>
+                    <div class="hidden xl:flex items-center gap-10">
+                        <a class="text-slate-600 hover:text-primary text-[13px] font-bold transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary/30 hover:after:w-full after:transition-all"
+                            href="Heritage.html">Heritage</a>
+                        <a class="text-slate-600 hover:text-primary text-[13px] font-bold transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary/30 hover:after:w-full after:transition-all"
+                            href="Cirriculum.html">Curriculum</a>
+                        <a class="text-slate-600 hover:text-primary text-[13px] font-bold transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary/30 hover:after:w-full after:transition-all"
+                            href="Admissions.html">Admissions</a>
+                        <a class="text-primary text-[13px] font-black transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-0.5 after:bg-primary/60"
+                            href="ScrapBook.html">Life at Pollocks</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-8">
+                    <button
+                        class="hidden lg:flex items-center gap-2 text-slate-600 hover:text-primary transition-colors group">
+                        <span
+                            class="material-symbols-outlined text-lg wax-stroke group-hover:scale-110 transition-transform">search</span>
+                        <span class="text-[12px] font-black uppercase tracking-widest">Explore</span>
+                    </button>
+                    <button
+                        class="hidden lg:flex items-center justify-center sketch-border bg-white px-10 py-2.5 text-primary text-[13px] font-black uppercase tracking-[0.2em] hover:bg-sky-50 transition-all crayon-button">
+                        Inquire Now
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="xl:hidden text-slate-600 hover:text-primary p-2 ml-4">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </button>
+            </nav>
+        </div>
+        <div class="alert-sub-bar">
+            <div
+                class="flex flex-col md:flex-row items-center gap-4 md:gap-10 mx-auto w-full md:w-auto text-center md:text-left">
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <span
+                        class="notification-pill group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <span class="material-symbols-outlined text-[12px]">campaign</span>
+                        Application Openings
+                    </span>
+                    <p
+                        class="text-[12px] font-medium text-slate-500 tracking-wide text-center md:text-left leading-relaxed">
+                        Spring 2026 Admissions now live
+                        for <span class="text-primary font-bold">Early Years &amp; Secondary</span></p>
+                </div>
+                <div class="h-3 w-[1px] bg-sky-200 hidden md:block opacity-40"></div>
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <span
+                        class="notification-pill border-sky-200 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <span class="material-symbols-outlined text-[12px]">timer</span>
+                        Upcoming Deadlines
+                    </span>
+                    <p
+                        class="text-[12px] font-medium text-slate-500 tracking-wide text-center md:text-left leading-relaxed">
+                        Scholarship applications close
+                        <span
+                            class="text-primary font-black underline decoration-sky-300/60 decoration-wavy underline-offset-2">November
+                            15th</span>
+                    </p>
+                </div>
+            </div>
+            <button class="absolute right-8 text-slate-300 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-xs">close</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white/95 backdrop-blur-xl z-[100] transform translate-x-full transition-transform duration-500 xl:hidden flex flex-col">
+        <div class="flex items-center justify-end p-6 border-b border-sky-100">
+            <button id="mobile-menu-close" class="text-slate-500 hover:text-primary p-2">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+        </div>
+        <div class="flex flex-col gap-6 p-8 overflow-y-auto">
+            <a href="Dashboard.html"
+                class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display flex items-center gap-3"><span
+                    class="material-symbols-outlined">home</span>Home</a>
+            <a href="Heritage.html"
+                class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Heritage</a>
+            <a href="Cirriculum.html"
+                class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Curriculum</a>
+            <a href="Admissions.html"
+                class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Admissions</a>
+            <a href="ScrapBook.html"
+                class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Life at
+                Pollocks</a>
+
+            <div class="h-px bg-sky-100 my-4"></div>
+
+            <button
+                class="flex items-center justify-center sketch-border bg-primary text-white py-4 text-sm font-black uppercase tracking-[0.2em] hover:bg-primary-dark transition-all rounded-xl shadow-lg shadow-primary/30">
+                Inquire Now
+            </button>
+        </div>
+    </div>
+    <div class="h-48 md:h-32"></div>
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="mb-16 relative">
+            <div class="absolute -top-10 -left-10 w-32 h-32 bg-sky-200/50 rounded-full blur-3xl"></div>
+            <div
+                class="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 relative z-10 w-full overflow-hidden">
+                <div class="max-w-2xl">
+                    <span
+                        class="inline-block px-3 py-1 bg-yellow-100 text-yellow-700 font-handwritten text-xl -rotate-2 mb-2">Moments
+                        of Joy</span>
+                    <h2
+                        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mt-2 mb-4 leading-tight break-words text-slate-900 font-display">
+                        Our
+                        School <br /><span class="font-hand text-primary italic hand-scribble">Scrapbook</span>
+                    </h2>
+                    <p class="text-slate-600 text-lg font-medium">A professional look into our vibrant campus life,
+                        captured through the eyes of our community.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-0 mt-6 md:mt-0">
+                    <button
+                        class="crayon-tab-blue px-6 md:px-10 py-3 md:py-4 rounded-t-2xl text-white font-black text-base md:text-lg shadow-lg -rotate-1 md:translate-y-2 hover:translate-y-0 transition-transform flex items-center gap-2">
+                        <span class="material-symbols-outlined">menu_book</span>
+                        Academics
+                    </button>
+                    <button
+                        class="crayon-tab-yellow px-6 md:px-10 py-3 md:py-4 rounded-t-2xl text-white font-black text-base md:text-lg shadow-lg rotate-1 md:translate-y-2 hover:translate-y-0 transition-transform flex items-center gap-2">
+                        <span class="material-symbols-outlined">palette</span>
+                        Culturals
+                    </button>
+                </div>
+            </div>
+            <div class="h-2 w-full bg-slate-200 rounded-full mt-[-8px] relative z-0"></div>
+        </div>
+        <div class="mb-20">
+            <div class="flex items-center gap-4 mb-10">
+                <span class="material-symbols-outlined text-4xl text-crayon-blue">science</span>
+                <h3 class="text-2xl sm:text-3xl font-black font-handwritten text-slate-700">Learning in Action</h3>
+                <div class="flex-grow h-0.5 bg-slate-200 border-b border-dashed border-slate-400"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <div class="md:col-span-7 relative group">
+                    <div class="tape-effect"></div>
+                    <div class="polaroid -rotate-1 group-hover:rotate-0">
+                        <div class="aspect-[4/3] overflow-hidden rounded-sm">
+                            <img alt="Modern Science Laboratory" class="polaroid-inner"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdKYVdF-x6E37HXQpapnNo3gkYb-ggbzky-gufy0iyND6JkpC7Gts62Iik5OyuuFjC3o4lAcyrKId9V7_9jNtTXnn7naMNA1pj47Z_eYZS0dAqYeuDCEV6nYcZS7h21wi8JB0oVUwelqbtBpG-0GRPi75r8-Z7tYrGkRNZdgr3A00WQYD-NZDcYtNPKvy7UlveL-7BSZCNHdDEiUHiNlvx-Jt5qHhtcpF1_SDuyuzW8fEmIqiTS2NGEOZUAtjeNmn8EJTUU0HNRZl5" />
+                        </div>
+                        <div class="absolute bottom-4 left-6 right-6 flex justify-between items-center">
+                            <p class="font-handwritten text-xl md:text-2xl text-slate-700 break-words">Future Scientists
+                                at Work! ⚗️</p>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Physics Wing /
+                                2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-5 flex flex-col gap-8">
+                    <div class="relative group">
+                        <div class="polaroid rotate-2 group-hover:rotate-0">
+                            <div class="aspect-video overflow-hidden rounded-sm">
+                                <img alt="Digital Library" class="polaroid-inner"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbNHXXqxngAEwx0FD3ty3PiarfWN1skc5uoiZn9O1rUeYES3WJJPBWaznHVYDQmTIAx5JoMxpYcIHu09T0GIIbaxOOzNxtzIHHahnPkz2IQ0_0ILPb00wsuH443x_x-GhOgb9jB3D9MkihbA3XETZ6adtW2w91UVeKCzqFezhpsBos33okNY4GfH6bp9inHGQqULpr-EKvaWD0nv2XbuNKBe74mHnRCU0FV6Df2wC6Qk4JqQApZQCg_nwqiOSkGLXHOHJETD4bIfuv" />
+                            </div>
+                            <div class="mt-4">
+                                <p class="font-note text-xl text-blue-600 leading-none">Quiet hours in our Digital
+                                    Hub...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="polaroid -rotate-2 group-hover:rotate-0">
+                            <div class="aspect-video overflow-hidden rounded-sm">
+                                <img alt="Robotics Club" class="polaroid-inner"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR38OKAvShxO16d0bVWKNhiMS8Aw1qTcHxsvwxcShTID8bTKRwMLr-5pKqyJ5xL3gMzJgDjspkkKPCHtBz9tKTmqJRRLqpTk36XzqV2cknla7EKFFSME_6Ao4ax33r3K7dZJ6gJDgKHru8Vxzfik1Rs3AsVpaGGR5OFICQsKQSuXcT4UCb5K8Xhg0_q2GpknPBZRdBu5_NHmTrNU66sjyyzqGJ8tBtcQjVD6BV0gTH5UmP08Ra8pEb5hx8EL2mZzej6X_qiWwoUNM9" />
+                            </div>
+                            <div class="mt-4">
+                                <p class="font-handwritten text-xl text-red-500">Building Tomorrow's AI Today! 🤖</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-32">
+            <div class="flex items-center justify-between mb-12">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-4xl text-crayon-yellow">celebration</span>
+                    <h3 class="text-3xl font-black font-handwritten text-slate-700">Festival of Colors &amp; Arts</h3>
+                </div>
+                <button class="font-bold text-primary flex items-center gap-2 group">
+                    Full Gallery <span
+                        class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="relative pt-6">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-10">
+                        <div
+                            class="w-12 h-12 bg-red-400/20 rounded-full flex items-center justify-center border-2 border-red-400/30">
+                            <span class="material-symbols-outlined text-red-500">push_pin</span>
+                        </div>
+                    </div>
+                    <div class="polaroid rotate-1 hover:-rotate-1 transition-all duration-500">
+                        <div class="aspect-square overflow-hidden mb-4">
+                            <img alt="Music Fest"
+                                class="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaEugE0MasnGY6PllRTKWjjM2-qbXfub05-J_AYCuHgfO3VkmGEs3fBNx-YPoxrKej-k7gU34zx3_cSlbj_neDeLnAxM7xAi8SjuWmYYgeJLIiERV-RahPoH1jGLXoF31xcw0-eBXpwpVZoA6UZuxaQo7JfmtsIvoucwB95f9FIpVP_w51Tv_xJe7l-MJa0Nct2owFjwI053b59ZatmTiPzW7M_UJC_q_-Fu6EOjJxr4TjXJ4Utm-vF_TpSkV8RapNlPlvyrsurfWI" />
+                        </div>
+                        <p class="font-handwritten text-xl text-slate-700">Melody Fest 2024 - Soulful!</p>
+                    </div>
+                </div>
+                <div class="relative pt-6">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-10">
+                        <div
+                            class="w-12 h-12 bg-blue-400/20 rounded-full flex items-center justify-center border-2 border-blue-400/30">
+                            <span class="material-symbols-outlined text-blue-500">push_pin</span>
+                        </div>
+                    </div>
+                    <div class="polaroid -rotate-2 hover:rotate-1 transition-all duration-500">
+                        <div class="aspect-square overflow-hidden mb-4">
+                            <img alt="Art Workshop"
+                                class="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq0fABX25tcRw3fv-FTjIsqwTFmNwz0vF-luoRDuilNagj3oL0nXBh5TU0PWxfqFNGpp7dPjoNnsqfUH4WTABmXdkdzCeaTKFbsejIDLUeRGufVzqvWsbM9yHHe92JD4EHRc6mK_w-5_iAH0uW1a1o94yY2GmtMvSaddaWuV8PuF72wNQGJ7z4fDAadBa0hpxd_z0OJZQcbfmTGFdYOTBdO1fK4ZAkG9a2WUWxfKIq55UNX3zi9vrIRar1gqS67SvjuUY9Y8kJIEYF" />
+                        </div>
+                        <p class="font-handwritten text-xl text-slate-700">Our Master Artists 🎨</p>
+                    </div>
+                </div>
+                <div class="relative pt-6">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-10">
+                        <div
+                            class="w-12 h-12 bg-yellow-400/20 rounded-full flex items-center justify-center border-2 border-yellow-400/30">
+                            <span class="material-symbols-outlined text-yellow-600">push_pin</span>
+                        </div>
+                    </div>
+                    <div class="polaroid rotate-3 hover:-rotate-1 transition-all duration-500">
+                        <div class="aspect-square overflow-hidden mb-4">
+                            <img alt="Theatre performance"
+                                class="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxlsr52M5kG_qzVruFWdBPe-z3WxbDJSePoFMefl0DgU9FDm9ZLSEjjeq-AWaDzdb6Z5ZsBsaaf1G-xTKC22gRJDRWVm6LuFHzvafaqgjZD-kbKwqVyuwW2VCctvYTQCH7quWF8Non74jEm5TM62v-mrqzLEdejq1bzz4Du2Ij8SW80gL1fj1fcKlXUf1ql6VHkiKQPduRI14UCYe2Z6k72znAM_DTUuvDHFOPWUrlvYnUsTeNPQkG1AFsfIfVMYUx3ppwI7WVzWRk" />
+                        </div>
+                        <p class="font-handwritten text-xl text-slate-700">Drama Night Magic ✨</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="max-w-7xl mx-auto px-6 py-24">
+        <div class="relative bg-gradient-to-br from-sky-400 to-blue-600 rounded-[3rem] p-12 overflow-hidden shadow-2xl">
+            <div class="absolute -top-10 -right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-yellow-400/20 rounded-full blur-2xl"></div>
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+                <div>
+                    <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight mb-6">Want to see our
+                        <br /><span class="text-yellow-300">world class</span> campus?
+                    </h3>
+                    <p class="text-white/90 text-lg mb-8 font-medium italic font-note text-2xl">"The best way to
+                        experience Pollocks is to visit us in person. Our doors are always open for parents!"</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button
+                            class="bg-white text-blue-600 px-8 py-4 rounded-2xl font-black hover:bg-slate-50 transition-all flex items-center gap-2 shadow-xl">
+                            <span class="material-symbols-outlined">calendar_today</span> Book a Visit
+                        </button>
+                        <button
+                            class="bg-transparent text-white border-2 border-white/50 px-8 py-4 rounded-2xl font-black hover:bg-white/10 transition-all">
+                            View Prospectus
+                        </button>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <div class="bg-white/15 backdrop-blur-md p-6 rounded-3xl border border-white/20 rotate-3">
+                                <span class="text-4xl font-black text-white block">25+</span>
+                                <span class="text-white/80 font-handwritten text-xl">Learning Labs</span>
+                            </div>
+                            <div
+                                class="bg-white/15 backdrop-blur-md p-6 rounded-3xl border border-white/20 -rotate-2 translate-x-4">
+                                <span class="text-4xl font-black text-white block">100%</span>
+                                <span class="text-white/80 font-handwritten text-xl">Digital Access</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-yellow-400 p-8 rounded-3xl shadow-xl rotate-6">
+                                <span class="text-blue-900 font-black text-5xl block">#1</span>
+                                <span class="text-blue-900/80 font-bold uppercase text-xs tracking-widest">Global
+                                    Rank</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-white border-t-8 border-primary/10 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-primary/10 p-2 rounded-xl">
+                            <span class="material-symbols-outlined text-primary font-bold">school</span>
+                        </div>
+                        <span class="font-black text-2xl text-slate-900">Pollocks School</span>
+                    </div>
+                    <p class="text-slate-500 max-w-xs font-medium">Nurturing curiosity, creativity, and excellence since
+                        1995. A second home for your child.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+                    <div>
+                        <h4 class="font-black text-slate-900 mb-6 uppercase text-xs tracking-widest">Quick Links</h4>
+                        <ul class="space-y-3 text-slate-500 font-bold text-sm">
+                            <li><a class="hover:text-primary" href="#">Campus Tour</a></li>
+                            <li><a class="hover:text-primary" href="#">Scholarships</a></li>
+                            <li><a class="hover:text-primary" href="#">Faculty</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-black text-slate-900 mb-6 uppercase text-xs tracking-widest">Support</h4>
+                        <ul class="space-y-3 text-slate-500 font-bold text-sm">
+                            <li><a class="hover:text-primary" href="#">Contact Us</a></li>
+                            <li><a class="hover:text-primary" href="#">FAQ</a></li>
+                            <li><a class="hover:text-primary" href="#">Parents Portal</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-slate-400 text-sm font-medium">© 2024 Pollocks International. Crafted with <span
+                        class="text-red-400">❤</span> for our students.</p>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all"
+                        href="#">
+                        <span class="material-symbols-outlined text-lg">share</span>
+                    </a>
+                    <a class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all"
+                        href="#">
+                        <span class="material-symbols-outlined text-lg">mail</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Mobile Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+            if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('translate-x-full');
+                });
+
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

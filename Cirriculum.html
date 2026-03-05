@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Curriculum | Pollocks School of Excellence</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;family=Gochi+Hand&amp;family=Architects+Daughter&amp;family=Patrick+Hand&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0ea5e9",
+                        "primary-dark": "#0369a1",
+                        "accent-sky": "#38bdf8",
+                        "paper-white": "#fdfdfb",
+                        "crayon-blue": "#7dd3fc",
+                        "wax-blue": "#0284c7",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "hand": ["Gochi Hand", "cursive"],
+                        "accent": ["Architects Daughter", "cursive"],
+                        "body": ["Patrick Hand", "cursive"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .paper-texture {
+                background-color: #fdfdfb;
+                background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+            }
+            .paper-texture-blue {
+                background-color: #f0f9ff;
+                background-image: url("https://www.transparenttextures.com/patterns/felt-paper.png");
+            }
+            .glass-nav-container {
+                @apply bg-white/80 backdrop-blur-2xl border-b border-sky-100/30 relative overflow-hidden;
+            }
+            .nav-inner-floating {
+                @apply mx-auto max-w-[1400px];
+            }
+            .sketch-border {
+                border: 2px solid #0ea5e9;
+                border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            }
+            .sketch-border-subtle {
+                border: 1.5px solid rgba(14, 165, 233, 0.4);
+                border-radius: 20px 5px 25px 5px/5px 25px 5px 20px;
+            }
+            .crayon-button {
+                @apply relative overflow-hidden transition-all duration-300;
+                box-shadow: 3px 3px 0px rgba(14, 165, 233, 0.3);
+                border-radius: 8px 3px 10px 3px/3px 10px 3px 8px;
+            }
+            .crayon-button:hover {
+                transform: translate(-1px, -1px);
+                box-shadow: 5px 5px 0px rgba(14, 165, 233, 0.5);
+            }
+            .wax-stroke {
+                filter: drop-shadow(1px 1px 0px rgba(2, 132, 199, 0.4));
+            }
+            .hand-scribble {
+                background-image: url("data:image/svg+xml,%3Csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5 Q 25 0, 50 5 T 100 5' fill='none' stroke='%230ea5e9' stroke-width='2' opacity='0.3'/%3E%3C/svg%3E");
+                background-repeat: repeat-x;
+                background-position: bottom;
+                padding-bottom: 4px;
+            }
+            .alert-sub-bar {
+                @apply bg-white/60 backdrop-blur-xl border-b border-sky-200/20 py-3 md:py-1.5 px-6 flex items-center justify-center gap-4 md:gap-12 flex-col md:flex-row overflow-hidden relative shadow-sm;
+            }
+            .notification-pill {
+                @apply hidden md:flex items-center gap-2 bg-white/90 px-2.5 py-0.5 sketch-border-subtle text-[10px] font-black uppercase tracking-widest text-primary shadow-sm;
+            }
+            .pencil-divider {
+                height: 2px;
+                background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.2), transparent);
+                mask-image: url("data:image/svg+xml,%3Csvg width='100' height='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1 Q 25 0, 50 1 T 100 1' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E");
+            }
+            .glossy-card {
+                @apply bg-gradient-to-br from-white to-sky-50 relative overflow-hidden;
+                box-shadow: inset 0 0 20px rgba(255,255,255,0.8), 0 10px 30px -10px rgba(14, 165, 233, 0.1);
+                border-radius: 24px 8px 32px 12px/12px 32px 8px 24px;
+                border: 1px solid rgba(125, 211, 252, 0.3);
+            }
+            .glossy-card::after {
+                content: '';
+                @apply absolute top-0 left-0 w-full h-full pointer-events-none;
+                background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%);
+            }
+        }
+    </style>
+</head>
+
+<body class="paper-texture font-display text-slate-800">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <header class="fixed top-0 z-50 w-full transition-all duration-500 shadow-2xl shadow-sky-900/5">
+            <div class="glass-nav-container">
+                <nav class="nav-inner-floating flex items-center justify-between px-4 md:px-8 lg:px-16 py-4">
+                    <div class="flex items-center gap-12">
+                        <a class="flex items-center gap-3 group" href="Dashboard.html">
+                            <img src="Logo.jpeg" alt="Pollocks School Logo" class="h-16 w-auto object-contain transform group-hover:scale-105 transition-transform drop-shadow-sm" />
+                        </a>
+                        <div class="hidden xl:flex items-center gap-10">
+                            <a class="text-slate-600 hover:text-primary text-[13px] font-bold transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary/30 hover:after:w-full after:transition-all"
+                                href="Heritage.html">Heritage</a>
+                            <a class="text-primary text-[13px] font-black transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-0.5 after:bg-primary/60"
+                                href="Cirriculum.html">Curriculum</a>
+                            <a class="text-slate-600 hover:text-primary text-[13px] font-bold transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary/30 hover:after:w-full after:transition-all"
+                                href="Admissions.html">Admissions</a>
+                            <a class="text-slate-600 hover:text-primary text-[13px] font-bold transition-colors uppercase tracking-[0.2em] font-display relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary/30 hover:after:w-full after:transition-all"
+                                href="ScrapBook.html">Life at Pollocks</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-8">
+                        <button
+                            class="hidden lg:flex items-center gap-2 text-slate-600 hover:text-primary transition-colors group">
+                            <span
+                                class="material-symbols-outlined text-lg wax-stroke group-hover:scale-110 transition-transform">search</span>
+                            <span class="text-[12px] font-black uppercase tracking-widest">Explore</span>
+                        </button>
+                        <button
+                            class="hidden lg:flex items-center justify-center sketch-border bg-white px-10 py-2.5 text-primary text-[13px] font-black uppercase tracking-[0.2em] hover:bg-sky-50 transition-all crayon-button">
+                            Inquire Now
+                        </button>
+                    </div>
+                
+                        <!-- Mobile Menu Button -->
+                        <button id="mobile-menu-btn" class="xl:hidden text-slate-600 hover:text-primary p-2 ml-4">
+                            <span class="material-symbols-outlined text-3xl">menu</span>
+                        </button>
+                    </nav>
+            </div>
+            <div class="alert-sub-bar">
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10 mx-auto w-full md:w-auto text-center md:text-left">
+                    <div class="flex items-center gap-3 group cursor-pointer">
+                        <span
+                            class="notification-pill group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                            <span class="material-symbols-outlined text-[12px]">campaign</span>
+                            Application Openings
+                        </span>
+                        <p class="text-[12px] font-medium text-slate-500 tracking-wide text-center md:text-left leading-relaxed">Spring 2026 Admissions now live
+                            for <span class="text-primary font-bold">Early Years &amp; Secondary</span></p>
+                    </div>
+                    <div class="h-3 w-[1px] bg-sky-200 hidden md:block opacity-40"></div>
+                    <div class="flex items-center gap-3 group cursor-pointer">
+                        <span
+                            class="notification-pill border-sky-200 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                            <span class="material-symbols-outlined text-[12px]">timer</span>
+                            Upcoming Deadlines
+                        </span>
+                        <p class="text-[12px] font-medium text-slate-500 tracking-wide text-center md:text-left leading-relaxed">Scholarship applications close
+                            <span
+                                class="text-primary font-black underline decoration-sky-300/60 decoration-wavy underline-offset-2">November
+                                15th</span>
+                        </p>
+                    </div>
+                </div>
+                <button class="absolute right-8 text-slate-300 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined text-xs">close</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-xl z-[100] transform translate-x-full transition-transform duration-500 xl:hidden flex flex-col">
+            <div class="flex items-center justify-end p-6 border-b border-sky-100">
+                <button id="mobile-menu-close" class="text-slate-500 hover:text-primary p-2">
+                    <span class="material-symbols-outlined text-3xl">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6 p-8 overflow-y-auto">
+                <a href="Dashboard.html" class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display flex items-center gap-3"><span class="material-symbols-outlined">home</span>Home</a>
+                <a href="Heritage.html" class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Heritage</a>
+                <a href="Cirriculum.html" class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Curriculum</a>
+                <a href="Admissions.html" class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Admissions</a>
+                <a href="ScrapBook.html" class="text-2xl font-medium text-slate-800 hover:text-primary transition-colors font-display">Life at Pollocks</a>
+                
+                <div class="h-px bg-sky-100 my-4"></div>
+                
+                <button class="flex items-center justify-center sketch-border bg-primary text-white py-4 text-sm font-black uppercase tracking-[0.2em] hover:bg-primary-dark transition-all rounded-xl shadow-lg shadow-primary/30">
+                    Inquire Now
+                </button>
+            </div>
+        </div>
+        <main class="flex-1 pt-40">
+            <section class="px-8 lg:px-24 mb-24">
+                <div class="max-w-7xl mx-auto text-center">
+                    <span class="text-primary font-hand text-3xl mb-4 block">Academic Life</span>
+                    <h1 class="text-slate-900 text-6xl md:text-7xl font-black tracking-tight font-display mb-8">
+                        A Curriculum for <br />
+                        <span class="hand-scribble italic text-primary">Brilliant Minds</span>
+                    </h1>
+                    <p class="text-slate-600 text-xl font-body max-w-3xl mx-auto leading-relaxed">
+                        At Pollocks, we blend rigorous academic standards with creative expression. Our curriculum is
+                        designed to spark curiosity, foster critical thinking, and build a foundation for lifelong
+                        learning.
+                    </p>
+                </div>
+            </section>
+            <section class="py-24 px-8 lg:px-24 paper-texture-blue relative">
+                <div class="max-w-7xl mx-auto">
+                    <div class="flex items-center gap-4 mb-16">
+                        <h2 class="text-slate-900 text-4xl font-black font-display uppercase tracking-tight">Core
+                            Subjects</h2>
+                        <div class="flex-1 pencil-divider"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="glossy-card p-8 group hover:-translate-y-2 transition-all duration-500">
+                            <div
+                                class="w-16 h-16 bg-white sketch-border-subtle flex items-center justify-center mb-6 text-primary group-hover:rotate-6 transition-transform">
+                                <span class="material-symbols-outlined text-4xl">biotech</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-4 font-display">Science &amp; Inquiry</h3>
+                            <p class="text-slate-600 font-body text-lg leading-snug mb-6">Exploring the wonders of the
+                                physical and biological world through hands-on laboratory discovery.</p>
+                            <div
+                                class="w-24 h-24 absolute -bottom-4 -right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <span class="material-symbols-outlined text-[100px]">magnification_small</span>
+                            </div>
+                        </div>
+                        <div class="glossy-card p-8 group hover:-translate-y-2 transition-all duration-500">
+                            <div
+                                class="w-16 h-16 bg-white sketch-border-subtle flex items-center justify-center mb-6 text-primary group-hover:-rotate-6 transition-transform">
+                                <span class="material-symbols-outlined text-4xl">calculate</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-4 font-display">Mathematics</h3>
+                            <p class="text-slate-600 font-body text-lg leading-snug mb-6">Building logical foundations
+                                and problem-solving skills that transcend the classroom.</p>
+                            <div
+                                class="w-24 h-24 absolute -bottom-4 -right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <span class="material-symbols-outlined text-[100px]">functions</span>
+                            </div>
+                        </div>
+                        <div class="glossy-card p-8 group hover:-translate-y-2 transition-all duration-500">
+                            <div
+                                class="w-16 h-16 bg-white sketch-border-subtle flex items-center justify-center mb-6 text-primary group-hover:rotate-6 transition-transform">
+                                <span class="material-symbols-outlined text-4xl">auto_stories</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-4 font-display">Humanities</h3>
+                            <p class="text-slate-600 font-body text-lg leading-snug mb-6">Understanding our global
+                                heritage and the stories that shape our modern civilization.</p>
+                            <div
+                                class="w-24 h-24 absolute -bottom-4 -right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <span class="material-symbols-outlined text-[100px]">public</span>
+                            </div>
+                        </div>
+                        <div class="glossy-card p-8 group hover:-translate-y-2 transition-all duration-500">
+                            <div
+                                class="w-16 h-16 bg-white sketch-border-subtle flex items-center justify-center mb-6 text-primary group-hover:-rotate-6 transition-transform">
+                                <span class="material-symbols-outlined text-4xl">translate</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-4 font-display">Linguistics</h3>
+                            <p class="text-slate-600 font-body text-lg leading-snug mb-6">Mastering the art of
+                                communication across multiple languages and cultures.</p>
+                            <div
+                                class="w-24 h-24 absolute -bottom-4 -right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <span class="material-symbols-outlined text-[100px]">pen_size_2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-16 md:py-24 lg:py-32 px-8 lg:px-24 paper-texture relative overflow-hidden">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                        <div class="space-y-10">
+                            <span class="text-primary font-hand text-3xl">Beyond the Books</span>
+                            <h2 class="text-slate-900 text-5xl font-black tracking-tight font-display leading-tight">
+                                Extra-Curricular <br />Enrichment</h2>
+                            <p class="text-slate-600 text-xl font-body leading-relaxed">
+                                Pollocks believes in the holistic development of every child. Our enrichment programs
+                                range from elite competitive sports to sophisticated performing arts, all mentored by
+                                professionals in their respective fields.
+                            </p>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-6 group">
+                                    <div
+                                        class="p-3 sketch-border-subtle bg-sky-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">palette</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display font-bold text-lg text-slate-900">Fine Arts &amp; Design
+                                        </h4>
+                                        <p class="font-body text-slate-500">Professional studio environments for
+                                            painting, digital arts, and sculpture.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-6 group">
+                                    <div
+                                        class="p-3 sketch-border-subtle bg-sky-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">sports_tennis</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display font-bold text-lg text-slate-900">Elite Athletics</h4>
+                                        <p class="font-body text-slate-500">State-of-the-art facilities for tennis,
+                                            swimming, and team sports.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-6 group">
+                                    <div
+                                        class="p-3 sketch-border-subtle bg-sky-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined">theater_comedy</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display font-bold text-lg text-slate-900">Performing Arts</h4>
+                                        <p class="font-body text-slate-500">World-class theater productions and
+                                            conservatory-grade music instruction.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="space-y-6">
+                                <div
+                                    class="sketch-border overflow-hidden aspect-[3/4] p-2 bg-white rotate-2 hover:rotate-0 transition-transform duration-500">
+                                    <img alt="Art Workshop" class="w-full h-full object-cover sketch-border-subtle"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0eNe6D7YccaYQ9ZumypGMpDKlw9tVjqjN7a2YLpzD2Ah8Wm1hek96bJaEr2PwnRiKVExnvRPPvJVVjJJ0Oe72psCiNwjQq6BKd1TEUdLKCqTrbHtgMJ_kFRM-nF6EUVpe8zzWtc_68oE5Rh4air_qEIAGbLLSCC2HHcuWyVKa1vQt4y8k502VNAcQeJBFGR7NOJ46qfv2BuUILQ2YA-Pis2oPxVoMCCJVvyTTOhIQv2pPNTu1nfdIo3CSLdRkmp4-XBkITS3GzO8U" />
+                                </div>
+                                <div
+                                    class="sketch-border overflow-hidden aspect-square p-2 bg-white -rotate-3 hover:rotate-0 transition-transform duration-500">
+                                    <img alt="Tennis Academy" class="w-full h-full object-cover sketch-border-subtle"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGBIWZVh_oRWzLCWZevZM6UlZ8vgSfiHFMwm-vf0dinWw-v-7yQeAs4tW0LH6P9QBOaHpJNVOkL33FuFk_2nSWs_U_B1kX5X3c0XxzwMjBYKtiassHpJks6x7orc9Q-3HJGT4phIPKpKrtY-4Xyut6JcJeb8aeYcZ2AF92PwtLazCAASAVR8t83wNMIAO-mq6dIGIH3LCJeZi0uFnN6vzJilskDq0oTaKt36c5L_Vkri44RxAi0vnklNKvjqsVoouIe2GjH-8miNFw" />
+                                </div>
+                            </div>
+                            <div class="space-y-6 pt-12">
+                                <div
+                                    class="sketch-border overflow-hidden aspect-square p-2 bg-white -rotate-1 hover:rotate-0 transition-transform duration-500">
+                                    <img alt="Music Hall" class="w-full h-full object-cover sketch-border-subtle"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxVeMMcVpJSltSToEuAOS66B5nUxan-U1jJxnDfMkMfWfJqr8d-wKQIFCEaK1rCbihJmd2kgxdzeZpmR8A8if98v5WwySTyqdpmdIgWCWXGfnrjUKQLUFncbsScRvt6sNLzL_4ipE06nVPy4FbfGFABZvAisEA3V3UCsge29Mc9NsfJPXO1jj5I1wp8KvSQxJjR8ZAGPpPkDweX2Lfo6FzVyY_UWrhF1TVE6hL1mc37nPBhL6MRYaropw0iG5QEXxH3p-UBqJ3A4Eo" />
+                                </div>
+                                <div
+                                    class="sketch-border overflow-hidden aspect-[3/4] p-2 bg-white rotate-3 hover:rotate-0 transition-transform duration-500">
+                                    <img alt="STEM Club" class="w-full h-full object-cover sketch-border-subtle"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGGgLrdqZ9yXh1pq1qkSM-CVDo_WjCoynov_AfbcTFK4ZE5CU0A6_SfwIR9Pwd_Bzn4dMJs1XF6DRvQNOPHpsTT-Je_yfDHKFMv3Vzy6PnJU4QRr6IHPWZKZVF2I3a_34PI7Tde6mw3B72X-RZ834gjGKdtCTHImgU1bQRmhscZMBVUex_L-8e-M497txMJ_VjBL3rx5HjKv_Piv6zQJ5JQEPH03GQvhSELaEkMO4yIYXBZ8aIdiCIAy6JVKqScHOjLblbaJ2ciGtQ" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-24 px-8 lg:px-24 paper-texture-blue">
+                <div class="max-w-5xl mx-auto">
+                    <div class="text-center mb-20">
+                        <h2 class="text-4xl font-black font-display text-slate-900 mb-4">The Learning Journey</h2>
+                        <div class="w-40 h-1 bg-primary/20 mx-auto pencil-divider"></div>
+                    </div>
+                    <div class="space-y-16">
+                        <div class="flex flex-col md:flex-row gap-12 items-center">
+                            <div class="w-full md:w-1/3 text-center md:text-right">
+                                <span class="font-hand text-primary text-4xl block mb-2">Early Years</span>
+                                <h4 class="font-display font-black text-xl text-slate-800 uppercase tracking-widest">
+                                    Ages 3 - 6</h4>
+                            </div>
+                            <div class="hidden md:block w-px h-24 bg-sky-200 relative">
+                                <div
+                                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-primary sketch-border-subtle">
+                                </div>
+                            </div>
+                            <div
+                                class="w-full md:w-2/3 bg-white/60 p-8 sketch-border-subtle hover:bg-white transition-colors">
+                                <p class="font-body text-xl text-slate-600">Focus on sensory exploration,
+                                    social-emotional development, and the joy of discovery through play-based learning
+                                    and literacy.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-12 items-center">
+                            <div class="w-full md:w-1/3 text-center md:text-right">
+                                <span class="font-hand text-primary text-4xl block mb-2">Primary School</span>
+                                <h4 class="font-display font-black text-xl text-slate-800 uppercase tracking-widest">
+                                    Ages 7 - 11</h4>
+                            </div>
+                            <div class="hidden md:block w-px h-24 bg-sky-200 relative">
+                                <div
+                                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-primary sketch-border-subtle">
+                                </div>
+                            </div>
+                            <div
+                                class="w-full md:w-2/3 bg-white/60 p-8 sketch-border-subtle hover:bg-white transition-colors">
+                                <p class="font-body text-xl text-slate-600">Developing core academic competencies in
+                                    STEM and Humanities while fostering independent research skills and creative
+                                    writing.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-12 items-center">
+                            <div class="w-full md:w-1/3 text-center md:text-right">
+                                <span class="font-hand text-primary text-4xl block mb-2">Secondary Level</span>
+                                <h4 class="font-display font-black text-xl text-slate-800 uppercase tracking-widest">
+                                    Ages 12 - 18</h4>
+                            </div>
+                            <div class="hidden md:block w-px h-24 bg-sky-200 relative">
+                                <div
+                                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-primary sketch-border-subtle">
+                                </div>
+                            </div>
+                            <div
+                                class="w-full md:w-2/3 bg-white/60 p-8 sketch-border-subtle hover:bg-white transition-colors">
+                                <p class="font-body text-xl text-slate-600">Rigorous college-preparatory coursework,
+                                    specialized electives, and leadership development preparing students for the global
+                                    stage.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="bg-slate-900 text-slate-100 pt-32 pb-12 px-8 lg:px-24 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-primary/30 via-primary/60 to-primary/30">
+            </div>
+            <div
+                class="absolute -top-10 left-1/2 -translate-x-1/2 w-[150%] h-20 bg-slate-900 sketch-border-subtle border-slate-700/50">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24 relative z-10">
+                <div class="space-y-10">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="material-symbols-outlined text-5xl text-primary wax-stroke transform rotate-12">school</span>
+                        <div>
+                            <h2 class="text-3xl font-black text-white uppercase font-hand leading-none">Pollocks</h2>
+                            <p class="text-[9px] tracking-[0.4em] text-primary-dark font-bold uppercase mt-1">Excellence
+                                Hub</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-lg leading-relaxed max-w-xs font-body italic">
+                        "Empowering the next generation with knowledge, empathy, and the courage to create."
+                    </p>
+                </div>
+                <div class="md:pt-4">
+                    <h4
+                        class="text-white font-black mb-10 uppercase tracking-[0.3em] text-[10px] font-display flex items-center gap-2">
+                        Navigation <span class="h-px w-8 bg-primary/40"></span>
+                    </h4>
+                    <ul class="space-y-6 text-slate-400 text-sm font-display font-medium">
+                        <li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#"><span
+                                    class="material-symbols-outlined text-[12px] wax-stroke">draw</span> Our
+                                Philosophy</a></li>
+                        <li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#"><span
+                                    class="material-symbols-outlined text-[12px] wax-stroke">draw</span> Academic
+                                Calendar</a></li>
+                    </ul>
+                </div>
+                <div class="md:pt-4">
+                    <h4
+                        class="text-white font-black mb-10 uppercase tracking-[0.3em] text-[10px] font-display flex items-center gap-2">
+                        For Parents <span class="h-px w-8 bg-primary/40"></span>
+                    </h4>
+                    <ul class="space-y-6 text-slate-400 text-sm font-display font-medium">
+                        <li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#"><span
+                                    class="material-symbols-outlined text-[12px] wax-stroke">draw</span> Admission
+                                Guide</a></li>
+                    </ul>
+                </div>
+                <div class="md:pt-4">
+                    <h4
+                        class="text-white font-black mb-10 uppercase tracking-[0.3em] text-[10px] font-display flex items-center gap-2">
+                        Get In Touch <span class="h-px w-8 bg-primary/40"></span>
+                    </h4>
+                    <div class="space-y-8 text-slate-400 text-sm font-display">
+                        <p class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-primary wax-stroke">location_on</span>
+                            123 Academic Way, <br />Innovation District, NY 10001
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-8 text-slate-500 text-[10px] font-black uppercase tracking-[0.4em]">
+                <p>© 2024 Pollocks International School. Designed with a creative edge.</p>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- Mobile Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+            if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('translate-x-full');
+                });
+
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
