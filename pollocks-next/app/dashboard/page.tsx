@@ -15,21 +15,19 @@ export default function DashboardPage() {
             <main className="flex-1">
                 {/* Hero Section */}
                 <section className="relative min-h-[100svh] md:min-h-[850px] flex items-center justify-center px-4 overflow-hidden pb-16 md:pb-0">
-                    <div className="absolute inset-0 z-0">
+                    {/* Background Video */}
+                    <div className="absolute inset-0 z-0 overflow-hidden">
+                        <div className="absolute inset-0 bg-black/40 z-10" />
                         <video
+                            className="w-full h-[120vh] object-cover scale-105 transform origin-center"
                             autoPlay
-                            className="w-full h-full object-cover object-center scale-105"
-                            loop
                             muted
+                            loop
                             playsInline
-                        >
-                            <source
-                                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                                type="video/mp4"
-                            />
-                        </video>
-                        <div className="absolute inset-0 bg-gradient-to-b from-sky-50/60 via-paper-white/70 to-paper-white"></div>
+                            src="/BG_VIDEO.mp4"
+                        />
                     </div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-sky-50/60 via-paper-white/70 to-paper-white"></div>
                     <div className="relative z-10 max-w-6xl w-full pt-[240px] md:pt-44">
                         <div className="bg-white/40 backdrop-blur-md p-8 md:p-12 lg:p-24 sketch-border border-[3px] border-primary/30 text-center relative">
                             <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-2 sketch-border-subtle font-hand text-lg rotate-1 shadow-md">

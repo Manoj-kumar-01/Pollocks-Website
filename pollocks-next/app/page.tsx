@@ -1,40 +1,15 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 export default function EntryPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [overlayVisible, setOverlayVisible] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
   const router = useRouter();
-
-  const handleEnter = useCallback(() => {
-    setOverlayVisible(false);
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.muted = false;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        video.muted = true;
-        setIsMuted(true);
-        video.play();
-      });
-    }
-  }, []);
 
   const handleVideoEnd = useCallback(() => {
     router.push("/dashboard");
   }, [router]);
-
-  const toggleMute = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !video.muted;
-    setIsMuted(video.muted);
-  }, []);
 
   return (
     <>
@@ -56,7 +31,6 @@ export default function EntryPage() {
           height: 100svh;
           object-fit: cover;
           object-position: center;
-          transform: scale(0.92);
           position: absolute;
           top: 0;
           left: 0;
@@ -146,37 +120,14 @@ export default function EntryPage() {
         ref={videoRef}
         className="entry-video"
         playsInline
+        autoPlay
+        muted
         preload="auto"
         onEnded={handleVideoEnd}
       >
-        <source src="/Entry_Video.mp4" type="video/mp4" />
+        <source src="/Entry_Video.mp4?v=1" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-
-      {/* Initial Overlay */}
-      <div className={`overlay ${!overlayVisible ? "fade-out" : ""}`}>
-        <div className="text-center px-4">
-          <h1 className="text-white text-5xl md:text-7xl font-black tracking-tight mb-2">
-            Pollocks
-          </h1>
-          <h2 className="text-sky-400 text-xl tracking-[0.4em] uppercase font-bold mb-8">
-            School of Excellence
-          </h2>
-          <button onClick={handleEnter} className="enter-btn">
-            Experience Pollocks
-          </button>
-        </div>
-      </div>
-
-      {/* On-screen controls during video */}
-      <div className="controls">
-        <button onClick={toggleMute} className="skip-btn">
-          {isMuted ? "Unmute" : "Mute"}
-        </button>
-        <a href="/dashboard" className="skip-btn">
-          Skip Intro
-        </a>
-      </div>
     </>
   );
 }
